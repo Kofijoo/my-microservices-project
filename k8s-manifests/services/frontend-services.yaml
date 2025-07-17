@@ -5,6 +5,7 @@ metadata:
   labels:
     app: frontend
     tier: frontend
+    service: frontend
 spec:
   type: ClusterIP
   selector:
@@ -14,6 +15,7 @@ spec:
       port: 80
       targetPort: 8080
       protocol: TCP
+      appProtocol: http
 ---
 apiVersion: v1
 kind: Service
@@ -22,6 +24,7 @@ metadata:
   labels:
     app: frontend
     tier: frontend
+    service: frontend
 spec:
   type: LoadBalancer
   selector:
@@ -31,3 +34,24 @@ spec:
       port: 80
       targetPort: 8080
       protocol: TCP
+      appProtocol: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-nodeport
+  labels:
+    app: frontend
+    tier: frontend
+    service: frontend
+spec:
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      nodePort: 30007
+      protocol: TCP
+      appProtocol: http

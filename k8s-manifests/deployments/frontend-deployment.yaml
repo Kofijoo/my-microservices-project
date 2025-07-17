@@ -5,6 +5,7 @@ metadata:
   labels:
     app: frontend
     tier: frontend
+    service: frontend
 spec:
   replicas: 1
   selector:
@@ -15,7 +16,9 @@ spec:
       labels:
         app: frontend
         tier: frontend
+        service: frontend
     spec:
+      terminationGracePeriodSeconds: 5
       serviceAccountName: frontend
       containers:
         - name: server
