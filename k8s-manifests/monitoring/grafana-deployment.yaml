@@ -5,6 +5,8 @@ metadata:
   namespace: monitoring
   labels:
     app: grafana
+    tier: monitoring
+    service: grafana
 spec:
   replicas: 1
   selector:
@@ -14,7 +16,10 @@ spec:
     metadata:
       labels:
         app: grafana
+        tier: monitoring
+        service: grafana
     spec:
+      terminationGracePeriodSeconds: 15
       containers:
       - name: grafana
         image: grafana/grafana:9.1.0

@@ -17,6 +17,9 @@ spec:
         app: cartservice
         tier: backend
         service: cart
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7070"
     spec:
       terminationGracePeriodSeconds: 5
       containers:

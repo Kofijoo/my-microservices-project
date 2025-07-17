@@ -5,9 +5,12 @@ metadata:
   namespace: monitoring
   labels:
     app: prometheus
+    tier: monitoring
+    service: prometheus
 spec:
   selector:
     app: prometheus
+  type: ClusterIP  # Change to NodePort if needed for browser access
   ports:
   - port: 9090
     targetPort: 9090

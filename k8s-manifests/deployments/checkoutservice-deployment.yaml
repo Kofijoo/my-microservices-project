@@ -17,6 +17,9 @@ spec:
         app: checkoutservice
         tier: backend
         service: checkout
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5050"
     spec:
       terminationGracePeriodSeconds: 5
       containers:

@@ -5,6 +5,8 @@ metadata:
   namespace: monitoring
   labels:
     app: grafana
+    tier: monitoring
+    service: grafana
 spec:
   type: NodePort
   selector:
