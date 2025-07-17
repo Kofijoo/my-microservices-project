@@ -1,53 +1,65 @@
-# Monitoring Setup for Microservices Demo
+# Microservices Demo on Kubernetes
 
-This directory contains Kubernetes manifests for setting up monitoring with Prometheus and Grafana.
+This is a full deployment of [Google Cloud's Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo) — a cloud-native microservices e-commerce application — running locally on Kubernetes with full monitoring, autoscaling, and service observability.
 
-## Components
+---
 
-- **Prometheus**: Collects metrics from services
-- **Grafana**: Visualizes metrics in dashboards
-- **HPAs (Horizontal Pod Autoscalers)**: Automatically scales services based on CPU usage
+## Stack Overview
 
-## Deployment
+| Layer        | Tool/Tech                         |
+|-------------|-----------------------------------|
+| Orchestration | Kubernetes (Minikube)            |
+| Services     | 11 Microservices (Go, Python, Java, Node.js, C#) |
+| Ingress      | NodePort (Local)                  |
+| Storage      | Redis (for cart)                  |
+| Monitoring   | Prometheus, Grafana               |
+| Autoscaling  | Horizontal Pod Autoscaler (HPA)   |
 
-Apply the manifests in the following order:
+---
+
+## Microservices Included
+
+- `frontend` – UI layer (Go)
+- `cartservice` – Cart state (Redis-backed)
+- `checkoutservice` – Order finalization
+- `productcatalogservice`, `currencyservice`, `paymentservice`, `emailservice`, `shippingservice`
+- `adservice`, `recommendationservice`, `loadgenerator`
+
+---
+
+## Features
+
+- ✅ **Modular Kubernetes Manifests**  
+  Split YAMLs for Deployments and Services per microservice
+
+- ✅ **Prometheus Monitoring**  
+  Scrapes metrics from all core services
+
+- ✅ **Grafana Dashboards**  
+  Preloaded with Pod CPU/Memory dashboards
+
+- ✅ **Horizontal Pod Autoscaling (HPA)**  
+  Based on CPU utilization for frontend, cart, and checkout
+
+- ✅ **Health Probes**  
+  Readiness & liveness probes for robust deployments
+
+---
+
+## Local Setup
+
+### Prerequisites
+- [Minikube](https://minikube.sigs.k8s.io/docs/)
+- `kubectl`
+
+### Run the App
 
 ```bash
-# Create namespace
-kubectl apply -f namespace.yaml
+# Start cluster
+minikube start
 
-# Deploy Prometheus
-kubectl apply -f prometheus-configmap.yaml
-kubectl apply -f prometheus-deployment.yaml
-kubectl apply -f prometheus-service.yaml
-
-# Deploy Grafana
-kubectl apply -f grafana-datasource-config.yaml
-kubectl apply -f grafana-dashboard-config.yaml
-kubectl apply -f grafana-deployment.yaml
-kubectl apply -f grafana-service.yaml
-
-# Apply HPAs
-kubectl apply -f frontend-hpa.yaml
-kubectl apply -f cartservice-hpa.yaml
-kubectl apply -f checkoutservice-hpa.yaml
-```
-
-## Accessing Dashboards
-
-- **Prometheus**: Access via `http://<node-ip>:30090` (if NodePort is configured)
-- **Grafana**: Access via `http://<node-ip>:30003`
-  - Default credentials: admin/admin
-
-## Dashboards
-
-The default dashboard shows:
-- CPU usage by pod
-- Memory usage by pod
-
-## Autoscaling
-
-The following services are configured to autoscale:
-- frontend: 1-5 replicas based on 70% CPU utilization
-- cartservice: 1-5 replicas based on 70% CPU utilization
-- checkoutservice: 1-5 replicas based on 70% CPU utilization
+# Apply manifests
+kubectl apply -f k8s-manifests/deployments/
+kubectl apply -f k8s-manifests/services/
+kubectl apply -f k8s-manifests/monitoring/namespace.yaml
+kubectl apply -f k8s-manifests/monitoring/ --namespace=monitoring
