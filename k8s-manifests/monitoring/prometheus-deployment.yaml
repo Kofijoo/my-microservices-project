@@ -19,6 +19,7 @@ spec:
         tier: monitoring
         service: prometheus
     spec:
+      serviceAccountName: prometheus
       terminationGracePeriodSeconds: 30
       containers:
       - name: prometheus
