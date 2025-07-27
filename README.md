@@ -1,4 +1,4 @@
-# Microservices Demo on Kubernetes
+# My full deployment of Google Cloud's microservices on Kubernetes
 
 This is a full deployment of [Google Cloud's Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo) — a cloud-native microservices e-commerce application — running locally on Kubernetes with full monitoring, autoscaling, and service observability.
 
