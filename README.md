@@ -33,10 +33,10 @@ This is a full deployment of [Google Cloud's Online Boutique](https://github.com
   Split YAMLs for Deployments and Services per microservice
 
 - ✅ **Prometheus Monitoring**  
-  Scrapes metrics from all core services
+  Scrapes metrics from all core services. nb
 
 - ✅ **Grafana Dashboards**  
-  Preloaded with Pod CPU/Memory dashboards
+  Preloaded with Pod CPU/Memory dashboards. nb
 
 - ✅ **Horizontal Pod Autoscaling (HPA)**  
   Based on CPU utilization for frontend, cart, and checkout
